@@ -1,11 +1,4 @@
 
-# myfile = open("fruits.txt")
-# content = myfile.read()
-# lista = list(content.splitlines())
-
-op = True
-
-# Funcion que purga los datos provenientes del archivo
 def onFilterElements(lista):
     for item in range(len(lista)):
         element = lista[item].replace("\n", "")
@@ -16,9 +9,8 @@ def onFilterElements(lista):
             lista.insert(item, element)
     return lista
         
-# def onSearchFruta(fruta):
 
-
+op = True
 while op:
     opt = int(input("""
         ***************************************
@@ -28,46 +20,66 @@ while op:
         ***** 3. Agregar fruta             ****
         ***** 4. Borrar fruta              ****
         ***** 5. Editar fruta              ****
+        ***** 6. Salir                     ****
         ***************************************
         ***************************************
         Escoja una opcion: """ ))
     
     if opt == 1:
-      # lectura
         with open("fruits.txt", "r") as myfile: 
             content = myfile.read()
             print("Frutas: \n",content)
+        
     elif opt == 2: 
         with open("fruits.txt", "r") as myfile:
             content = myfile.readlines()
             array = onFilterElements(content)
-            fruta = str(input("Fruta a buscar: "))
-            # fruit = array[f"{fruta}"]
+            fruta = str(input("Fruta a buscar: ")) 
             
-            for value in array:
-                if value.lower() == fruta.lower():
-                    print("Fruta Encontrada: ", value)
-                    break
-            
-
-    elif opt == 3:
-        print()
-                
-                    
+            if fruta in array:
+                print("Fruta encontrada: ", fruta)
+                print(array)
+            else:
+                print("Fruta NO encontrada")
         
+    elif opt == 3:
+        with open("fruits.txt", "a") as myfile:
+            fruta = str(input("Ingresar Fruta: "))
+            myfile.write(fruta + "\n")
+            
+    elif opt == 4:
+        fruta = str(input("Ingresar Fruta a borrar: "))
 
+        with open("fruits.txt", "r") as file:
+            lineas = file.readlines()
 
+        with open("fruits.txt", "w") as myfile:
+            for l in lineas:
+                if l.strip() != fruta:
+                    myfile.write(l)
+        print(onFilterElements(lineas))
+        
+    elif opt == 5:
+        fruta = str(input("Ingresar Fruta vieja: "))
+        fruit = str(input("Ingresar Fruta nueva: "))
 
-# # lectura
-# with open("fruits.txt", "r") as myfile: 
-#     content = myfile.read()
+        with open("fruits.txt", "r") as myfile:
+            content = myfile.readlines()
 
-# print(content)
+        nuevas_frutas = []
+        for l in content:
+            if l.strip() == fruta:
+                nuevas_frutas.append(fruit + "\n")
+            else:
+                nuevas_frutas.append(l)
 
-
-# # escritura
-# with open("fruits.txt", "a") as myfile: 
-#     text = input("Ingrese una fruta:")
-#     myfile.write(f"\n{text}")
+        with open("fruits.txt", "w") as myfile:
+            myfile.writelines(nuevas_frutas)
+        
+    elif opt == 6: 
+        print("--------- Te esperamos nuevamente----------")
+        op = False
     
-# print(myfile)
+    else:
+        print("--------- Opcion no válida, intente de nuevo ----------")
+        op = False

@@ -3,7 +3,7 @@ apple
 orange
 mandarin
 watermelon
-pomegranate
 mango
+pomegranate
 pineapple
 strawberry
